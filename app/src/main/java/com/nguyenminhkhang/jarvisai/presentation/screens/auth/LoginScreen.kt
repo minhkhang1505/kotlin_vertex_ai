@@ -1,15 +1,13 @@
-package com.nguyenminhkhang.jarvisai.presentation.screens
+package com.nguyenminhkhang.jarvisai.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -19,12 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nguyenminhkhang.jarvisai.R
 import com.nguyenminhkhang.jarvisai.presentation.components.CustomButton
 import com.nguyenminhkhang.jarvisai.presentation.components.CustomTextField
 import com.nguyenminhkhang.jarvisai.presentation.components.SignInWithGoogle
+import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.NoName
+import com.nguyenminhkhang.jarvisai.ui.theme.JarvisAITheme
 
 data class LoginState(
     val username: String = "",
@@ -83,7 +84,19 @@ fun LoginScreen(modifier: Modifier) {
                 leadingIcon = painterResource(R.drawable.ic_google),
                 onClick = { }
             )
+            NoName(
+                fontSize = 12.sp,
+                onClick = {}
+            )
         }
     }
 
+}
+
+@Preview
+@Composable
+fun LoginScreenPreview() {
+    JarvisAITheme(darkTheme = false, dynamicColor = false) {
+        LoginScreen(modifier = Modifier)
+    }
 }

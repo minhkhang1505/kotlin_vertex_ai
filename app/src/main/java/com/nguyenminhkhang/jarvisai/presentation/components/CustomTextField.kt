@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,17 +26,20 @@ import com.nguyenminhkhang.jarvisai.R
 
 @Composable
 fun CustomTextField(modifier: Modifier, text: String?, textFieldTitle: String, trailingIcon: Painter?) {
-    Column {
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
         Text(
             text = textFieldTitle,
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(bottom = 4.dp)
         )
         BasicTextField(
             value = text ?: "",
             onValueChange = {},
-            modifier = modifier.clip(shape = RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceVariant),
+            modifier = modifier
+                .clip(shape = RoundedCornerShape(12.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant),
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             decorationBox = { innerTextField ->
                 Row(

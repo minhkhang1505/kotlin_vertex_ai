@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.nguyenminhkhang.jarvisai.presentation.screens.LoginScreen
+import com.nguyenminhkhang.jarvisai.presentation.screens.auth.LoginScreen
 import com.nguyenminhkhang.jarvisai.ui.theme.JarvisAITheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JarvisAITheme(
                 darkTheme = isSystemInDarkTheme(),
-                dynamicColor = true
+                dynamicColor = false
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

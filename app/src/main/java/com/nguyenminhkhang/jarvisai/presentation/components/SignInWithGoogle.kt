@@ -45,7 +45,7 @@ fun SignInWithGoogle(modifier : Modifier, buttonText : String, leadingIcon: Pain
                     painter = it!!,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp),
-                    tint = colorScheme.primary
+                    tint = Color.Unspecified
                 )
             }
             Spacer(Modifier.width(4.dp))
