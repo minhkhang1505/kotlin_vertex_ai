@@ -43,7 +43,7 @@ fun CustomTextField(modifier: Modifier, text: String?, textFieldTitle: String, t
             onValueChange = {},
             modifier = modifier
                 .clip(shape = RoundedCornerShape(12.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant),
+                .background(MaterialTheme.colorScheme.outline.copy(0.1f)),
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             decorationBox = { innerTextField ->
                 Row(
