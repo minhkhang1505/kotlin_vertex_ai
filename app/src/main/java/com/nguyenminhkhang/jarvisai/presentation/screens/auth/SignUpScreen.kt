@@ -23,13 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.nguyenminhkhang.jarvisai.R
 import com.nguyenminhkhang.jarvisai.presentation.components.CustomButton
 import com.nguyenminhkhang.jarvisai.presentation.components.CustomTextField
 import com.nguyenminhkhang.jarvisai.presentation.components.SignInWithGoogle
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.DividerOr
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.NoName
-import com.nguyenminhkhang.jarvisai.presentation.viewmodel.LoginEvent
 import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
 import com.nguyenminhkhang.jarvisai.presentation.viewmodel.SignUpEvent
 
@@ -42,7 +42,7 @@ data class SignUpState(
 )
 
 @Composable
-fun SignUpScreen(viewModel : AuthViewModel = hiltViewModel()) {
+fun SignUpScreen(navController: NavController, viewModel : AuthViewModel = hiltViewModel()) {
     val uiState = viewModel.signUpUiState.collectAsState()
     Column(
         modifier = Modifier
@@ -115,13 +115,13 @@ fun SignUpScreen(viewModel : AuthViewModel = hiltViewModel()) {
                     modifier = Modifier,
                     buttonText = "Sign in with Google",
                     leadingIcon = painterResource(R.drawable.ic_google),
-                    onClick = { }
+                    onClick = {  }
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 NoName(
                     description = "You already have an account? ",
                     fontSize = 12.sp,
-                    onClick = {},
+                    onClick = {navController.navigate("login")},
                     buttonName = "Sign In"
                 )
             }

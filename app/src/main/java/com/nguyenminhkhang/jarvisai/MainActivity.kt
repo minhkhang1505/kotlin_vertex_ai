@@ -6,6 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.navigation.compose.rememberNavController
+import com.nguyenminhkhang.jarvisai.presentation.navigation.Navigation
+import com.nguyenminhkhang.jarvisai.presentation.screens.account.AccountScreen
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.LoginScreen
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.LoginState
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.SignUpScreen
@@ -16,6 +19,7 @@ import dagger.hilt.android.HiltAndroidApp
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -23,7 +27,7 @@ class MainActivity : ComponentActivity() {
                 darkTheme = isSystemInDarkTheme(),
                 dynamicColor = false
             ) {
-                SignUpScreen()
+                Navigation()
             }
         }
     }

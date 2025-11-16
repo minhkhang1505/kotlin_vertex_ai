@@ -31,6 +31,8 @@ import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.Divider
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.NoName
 import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.nguyenminhkhang.jarvisai.presentation.navigation.Screen
 import com.nguyenminhkhang.jarvisai.presentation.viewmodel.LoginEvent
 
 data class LoginState(
@@ -43,7 +45,7 @@ data class LoginState(
 val spaceBetweenElements = 12.dp
 
 @Composable
-fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
+fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltViewModel()) {
     val uiState = viewModel.uiState.collectAsState()
     Column(
         modifier = Modifier
@@ -98,7 +100,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                     modifier = Modifier,
                     buttonText = "Sign In",
                     trailingIcon = null,
-                    onClick = { }
+                    onClick = {   }
                 )
                 Spacer(Modifier.height(spaceBetweenElements + 10.dp))
                 DividerOr(modifier = Modifier.padding(horizontal = 60.dp))
@@ -113,7 +115,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                 NoName(
                     description = "You don't have an account? ",
                     fontSize = 12.sp,
-                    onClick = {},
+                    onClick = {navController.navigate(Screen.SignUpScreen.route)},
                     buttonName = "Sign Up"
                 )
             }
