@@ -27,7 +27,7 @@ class AuthViewModel @Inject constructor(
     val signUpUiState: StateFlow<SignUpState> = _signUpUiState
 
     val _signInResult = MutableStateFlow<Result<SignInResponse>?>(null)
-    val loginResult: StateFlow<Result<Any>?> = _signInResult
+    val signInResult: StateFlow<Result<Any>?> = _signInResult
 
     val _signUpResult = MutableStateFlow<Result<SignUpResponse>?>(null)
     val signUpResult: StateFlow<Result<Any>?> = _signUpResult
@@ -130,6 +130,7 @@ sealed class SignInEvent {
     data class OnPasswordChange(val password: String) : SignInEvent()
     object OnSignInClick : SignInEvent()
     object OnGoogleSignInClick : SignInEvent()
+
 }
 
 sealed class SignUpEvent {

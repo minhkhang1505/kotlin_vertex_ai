@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,6 +48,25 @@ val spaceBetweenElements = 12.dp
 @Composable
 fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltViewModel()) {
     val uiState = viewModel.signInState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.signInResult.collect {result ->
+            result?.onSuccess {
+                // Navigate to the main screen or dashboard after successful sign-in
+                navController.navigate(Screen.AccountScreen.route) {
+                    popUpTo(Screen.LoginScreen.route) { inclusive = true }
+                }
+            }?.onFailure { exception ->
+                // Handle sign-in failure (e.g., show error message)
+                viewModel._signInUiState.value = viewModel._signInUiState.value.copy(
+                    isLoading = false,
+                    errorMessage = exception.message
+                )
+            }
+
+        }
+
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
