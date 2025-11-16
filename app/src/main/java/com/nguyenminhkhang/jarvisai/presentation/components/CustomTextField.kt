@@ -1,9 +1,11 @@
 package com.nguyenminhkhang.jarvisai.presentation.components
 
+import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.nguyenminhkhang.jarvisai.R
 
 @Composable
@@ -31,9 +34,10 @@ fun CustomTextField(modifier: Modifier, text: String?, textFieldTitle: String, t
     ) {
         Text(
             text = textFieldTitle,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold, fontSize = 14.sp),
             color = MaterialTheme.colorScheme.onSurface,
         )
+        Spacer(Modifier.height(4.dp))
         BasicTextField(
             value = text ?: "",
             onValueChange = {},
@@ -52,7 +56,7 @@ fun CustomTextField(modifier: Modifier, text: String?, textFieldTitle: String, t
                         if(text.isNullOrEmpty()) {
                             Text(
                                 "Enter text here...",
-                                style = MaterialTheme.typography.bodyLarge,
+                                style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         innerTextField()

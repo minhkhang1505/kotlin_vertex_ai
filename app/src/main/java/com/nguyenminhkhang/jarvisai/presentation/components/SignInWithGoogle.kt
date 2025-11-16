@@ -31,9 +31,9 @@ fun SignInWithGoogle(modifier : Modifier, buttonText : String, leadingIcon: Pain
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = colorScheme.primary
+            contentColor = colorScheme.onSurface
         ),
-        border = BorderStroke(1.dp, colorScheme.primary),
+        border = BorderStroke(1.5.dp, colorScheme.outline.copy(0.2f)),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
