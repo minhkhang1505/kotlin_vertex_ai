@@ -1,5 +1,6 @@
 package com.nguyenminhkhang.jarvisai.presentation.screens.auth
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +29,9 @@ import com.nguyenminhkhang.jarvisai.presentation.components.CustomTextField
 import com.nguyenminhkhang.jarvisai.presentation.components.SignInWithGoogle
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.DividerOr
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.NoName
+import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthEvent
 
 data class LoginState(
     var username: String = "",
@@ -38,7 +43,8 @@ data class LoginState(
 val spaceBetweenElements = 12.dp
 
 @Composable
-fun LoginScreen(uiState: LoginState) {
+fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
+    val uiState = viewModel.uiState.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,20 +75,22 @@ fun LoginScreen(uiState: LoginState) {
                     .background(MaterialTheme.colorScheme.onPrimary)
                     .padding(16.dp),
             ) {
+                Text("Enter your email and password to sign in now!", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
                     modifier = Modifier,
-                    value = uiState.username,
+                    value = uiState.value.username,
                     textFieldTitle = "Username",
                     trailingIcon = null,
-                    onValueChange = {uiState.username = it}
+                    onValueChange = {viewModel.onEvent(AuthEvent.OnUsernameChange(it))},
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
                     modifier = Modifier,
-                    value = uiState.password,
+                    value = uiState.value.password,
                     textFieldTitle = "Password",
                     trailingIcon = painterResource(R.drawable.ic_eye_on),
-                    onValueChange = {uiState.password = it},
+                    onValueChange = {viewModel.onEvent(AuthEvent.OnPasswordChange(it))},
                     isPassword = true
                 )
                 Spacer(Modifier.height(spaceBetweenElements))

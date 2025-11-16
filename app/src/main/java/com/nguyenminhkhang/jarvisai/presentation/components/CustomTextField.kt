@@ -26,7 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomTextField(modifier: Modifier, value: String, onValueChange: (String) -> Unit, isPassword: Boolean = false, textFieldTitle: String, trailingIcon: Painter?) {
+fun CustomTextField(
+    modifier: Modifier,
+    value: String, onValueChange: (String) -> Unit,
+    isPassword: Boolean = false,
+    textFieldTitle: String,
+    trailingIcon: Painter?
+) {
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -38,8 +44,8 @@ fun CustomTextField(modifier: Modifier, value: String, onValueChange: (String) -
         Spacer(Modifier.height(4.dp))
         BasicTextField(
             value = value,
-            onValueChange = onValueChange,
-            modifier = modifier
+            onValueChange = { onValueChange(it) },
+            modifier = Modifier
                 .clip(shape = RoundedCornerShape(12.dp))
                 .background(MaterialTheme.colorScheme.outline.copy(0.1f)),
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
@@ -50,9 +56,12 @@ fun CustomTextField(modifier: Modifier, value: String, onValueChange: (String) -
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
-                        modifier = Modifier.fillMaxWidth().weight(1f).padding(12.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(12.dp)
                     ) {
-                        if(value.isNullOrEmpty()) {
+                        if(value.isEmpty()) {
                             Text(
                                 "Enter text here...",
                                 style = MaterialTheme.typography.bodyMedium,
@@ -65,7 +74,8 @@ fun CustomTextField(modifier: Modifier, value: String, onValueChange: (String) -
                             painter = trailingIcon,
                             contentDescription = null,
                             modifier = Modifier
-                                .padding(end = 8.dp).size(20.dp),
+                                .padding(end = 8.dp)
+                                .size(20.dp),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
