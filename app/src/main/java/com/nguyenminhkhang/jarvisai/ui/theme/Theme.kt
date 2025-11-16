@@ -277,8 +277,14 @@ fun JarvisAITheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            // Align system bars with app surface color for visual consistency
+            val surfaceColor = colorScheme.surface.toArgb()
+            window.statusBarColor = surfaceColor
+            window.navigationBarColor = surfaceColor
+            val controller = WindowCompat.getInsetsController(window, view)
+            // Use light icons only when in dark theme (surface is dark), otherwise dark icons
+            controller.isAppearanceLightStatusBars = !darkTheme
+            controller.isAppearanceLightNavigationBars = !darkTheme
         }
     }
 
