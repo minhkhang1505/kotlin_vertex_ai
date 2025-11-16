@@ -33,7 +33,7 @@ import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nguyenminhkhang.jarvisai.presentation.navigation.Screen
-import com.nguyenminhkhang.jarvisai.presentation.viewmodel.LoginEvent
+import com.nguyenminhkhang.jarvisai.presentation.viewmodel.signInEvent
 
 data class LoginState(
     var username: String = "",
@@ -63,7 +63,7 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.align(Alignment.CenterHorizontally).size(60.dp)
             )
-            Text("Wellcome", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Welcome", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text("Sign in to continue to your AI workspace", fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f))
         }
         Spacer(Modifier.height(20.dp))
@@ -84,7 +84,7 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                     value = uiState.value.username,
                     textFieldTitle = "Username",
                     trailingIcon = null,
-                    onValueChange = {viewModel.onEvent(LoginEvent.OnUsernameChange(it))},
+                    onValueChange = {viewModel.onSignInEvent(signInEvent.OnUsernameChange(it))},
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
@@ -92,7 +92,7 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                     value = uiState.value.password,
                     textFieldTitle = "Password",
                     trailingIcon = painterResource(R.drawable.ic_eye_on),
-                    onValueChange = {viewModel.onEvent(LoginEvent.OnPasswordChange(it))},
+                    onValueChange = {viewModel.onSignInEvent(signInEvent.OnPasswordChange(it))},
                     isPassword = true
                 )
                 Spacer(Modifier.height(spaceBetweenElements + 12.dp))

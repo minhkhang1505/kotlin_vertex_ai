@@ -1,3 +1,8 @@
 package com.nguyenminhkhang.jarvisai.data.remote.dto.sign
 
-data class SignInRequest()
+import com.google.gson.annotations.SerializedName
+
+data class SignInRequest (
+    val email: String,
+    val password: String
+)
