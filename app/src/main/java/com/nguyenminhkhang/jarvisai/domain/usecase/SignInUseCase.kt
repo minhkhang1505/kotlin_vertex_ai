@@ -3,11 +3,12 @@ package com.nguyenminhkhang.jarvisai.domain.usecase
 import com.nguyenminhkhang.jarvisai.data.remote.dto.sign.SignInRequest
 import com.nguyenminhkhang.jarvisai.data.remote.dto.sign.SignInResponse
 import com.nguyenminhkhang.jarvisai.data.repository.AuthRepository
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
-class SignInUseCase(
+class SignInUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
 

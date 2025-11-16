@@ -33,10 +33,10 @@ import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nguyenminhkhang.jarvisai.presentation.navigation.Screen
-import com.nguyenminhkhang.jarvisai.presentation.viewmodel.signInEvent
+import com.nguyenminhkhang.jarvisai.presentation.viewmodel.SignInEvent
 
 data class LoginState(
-    var username: String = "",
+    var email: String = "",
     var password: String = "",
     var isLoading: Boolean = false,
     var errorMessage: String? = null
@@ -46,7 +46,7 @@ val spaceBetweenElements = 12.dp
 
 @Composable
 fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltViewModel()) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.signInState.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,10 +81,10 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                 Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
                     modifier = Modifier,
-                    value = uiState.value.username,
+                    value = uiState.value.email,
                     textFieldTitle = "Username",
                     trailingIcon = null,
-                    onValueChange = {viewModel.onSignInEvent(signInEvent.OnUsernameChange(it))},
+                    onValueChange = {viewModel.onSignInEvent(SignInEvent.OnUsernameChange(it))},
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
@@ -92,7 +92,7 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                     value = uiState.value.password,
                     textFieldTitle = "Password",
                     trailingIcon = painterResource(R.drawable.ic_eye_on),
-                    onValueChange = {viewModel.onSignInEvent(signInEvent.OnPasswordChange(it))},
+                    onValueChange = {viewModel.onSignInEvent(SignInEvent.OnPasswordChange(it))},
                     isPassword = true
                 )
                 Spacer(Modifier.height(spaceBetweenElements + 12.dp))
@@ -100,7 +100,9 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                     modifier = Modifier,
                     buttonText = "Sign In",
                     trailingIcon = null,
-                    onClick = {   }
+                    onClick = {
+                        viewModel.onSignInEvent(SignInEvent.OnSignInClick)
+                    }
                 )
                 Spacer(Modifier.height(spaceBetweenElements + 10.dp))
                 DividerOr(modifier = Modifier.padding(horizontal = 60.dp))
@@ -109,7 +111,9 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel = hiltView
                     modifier = Modifier,
                     buttonText = "Sign in with Google",
                     leadingIcon = painterResource(R.drawable.ic_google),
-                    onClick = { }
+                    onClick = {
+                        //TODO: Handle Google Sign In will be implemented later
+                    }
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 NoName(

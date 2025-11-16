@@ -5,8 +5,9 @@ import com.nguyenminhkhang.jarvisai.data.remote.dto.signup.SignUpResponse
 import com.nguyenminhkhang.jarvisai.data.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class SignUpUseCase(
+class SignUpUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
     operator fun invoke(

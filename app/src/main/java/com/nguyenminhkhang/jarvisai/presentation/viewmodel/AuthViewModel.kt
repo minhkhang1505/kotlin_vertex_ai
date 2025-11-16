@@ -1,5 +1,6 @@
 package com.nguyenminhkhang.jarvisai.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nguyenminhkhang.jarvisai.data.remote.dto.sign.SignInResponse
@@ -19,8 +20,8 @@ class AuthViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
-    val _uiState : MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
-    val uiState: StateFlow<LoginState> = _uiState
+    val _signInUiState : MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
+    val signInState: StateFlow<LoginState> = _signInUiState
 
     val _signUpUiState : MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val signUpUiState: StateFlow<SignUpState> = _signUpUiState
@@ -31,25 +32,60 @@ class AuthViewModel @Inject constructor(
     val _signUpResult = MutableStateFlow<Result<SignUpResponse>?>(null)
     val signUpResult: StateFlow<Result<Any>?> = _signUpResult
 
-    fun onSignInEvent(event: signInEvent) {
+    private fun validator(
+        signInState: LoginState?,
+        signUpState: SignUpState?,
+    ): Boolean {
+        if (signInState != null) {
+            val username = signInState.email ?: ""
+            val password = signInState.password ?: ""
+            if (username.isEmpty() || password.isEmpty()) {
+                Log.d("AuthViewModel", "validator: Username or password is empty")
+                _signInUiState.value.errorMessage = "Username and password must not be empty"
+                return false
+            }
+        }
+        else if (signUpState != null) {
+            val username = signUpState.username ?: ""
+            val password = signUpState.password ?: ""
+            val confirmPassword = signUpState.confirmPassword ?: ""
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                Log.d("AuthViewModel", "validator: Username, password or confirm password is empty")
+                _signUpUiState.value.errorMessage = "Username, password and confirm password must not be empty"
+                return false
+            }
+            if (password != confirmPassword) {
+                Log.d("AuthViewModel", "validator: Password and confirm password do not match")
+                _signUpUiState.value.errorMessage = "Password and confirm password do not match"
+                return false
+            }
+        }
+        return true
+    }
+
+    fun onSignInEvent(event: SignInEvent) {
         when (event) {
-            is signInEvent.OnUsernameChange -> {
-                _uiState.value = _uiState.value.copy(username = event.username)
+            is SignInEvent.OnUsernameChange -> {
+                _signInUiState.value = _signInUiState.value.copy(email = event.username)
             }
-            is signInEvent.OnPasswordChange -> {
-                _uiState.value = _uiState.value.copy(password = event.password)
+            is SignInEvent.OnPasswordChange -> {
+                _signInUiState.value = _signInUiState.value.copy(password = event.password)
             }
-            is signInEvent.OnSignInClick -> {
+            is SignInEvent.OnSignInClick -> {
+                if (!validator(_signInUiState.value, null)) {
+                    return
+                }
                 viewModelScope.launch {
                     signInUseCase(
-                        email = _uiState.value.username,
-                        password = _uiState.value.password
-                    ).collect {
-                        _signInResult.value = it
+                        email = _signInUiState.value.email,
+                        password = _signInUiState.value.password
+                    ).collect {result ->
+                        Log.d("AuthViewModel", "onSignUpEvent: Sign-up result: $result")
+                        _signInResult.value = result
                     }
                 }
             }
-            is signInEvent.OnGoogleSignInClick -> {
+            is SignInEvent.OnGoogleSignInClick -> {
                 // Handle Google sign-in logic here
             }
         }
@@ -67,13 +103,17 @@ class AuthViewModel @Inject constructor(
                 _signUpUiState.value = _signUpUiState.value.copy(confirmPassword = event.confirmPassword)
             }
             is SignUpEvent.OnSignUpClick -> {
+                if(!validator(null, _signUpUiState.value)) {
+                    return
+                }
                 viewModelScope.launch {
                     signUpUseCase(
                         email = _signUpUiState.value.username,
                         password = _signUpUiState.value.password,
                         verificationCallbackURL = ""
-                    ).collect {
-                        _signUpResult.value = it
+                    ).collect {result ->
+                        Log.d("AuthViewModel", "onSignUpEvent: Sign-up result: $result")
+                        _signUpResult.value = result
                         // Handle sign-up result here
                     }
                 }
@@ -85,11 +125,11 @@ class AuthViewModel @Inject constructor(
     }
 }
 
-sealed class signInEvent {
-    data class OnUsernameChange(val username: String) : signInEvent()
-    data class OnPasswordChange(val password: String) : signInEvent()
-    object OnSignInClick : signInEvent()
-    object OnGoogleSignInClick : signInEvent()
+sealed class SignInEvent {
+    data class OnUsernameChange(val username: String) : SignInEvent()
+    data class OnPasswordChange(val password: String) : SignInEvent()
+    object OnSignInClick : SignInEvent()
+    object OnGoogleSignInClick : SignInEvent()
 }
 
 sealed class SignUpEvent {

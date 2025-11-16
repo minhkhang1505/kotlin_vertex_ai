@@ -7,8 +7,9 @@ import com.nguyenminhkhang.jarvisai.data.remote.dto.signup.SignUpRequest
 import com.nguyenminhkhang.jarvisai.data.remote.dto.signup.SignUpResponse
 import com.nguyenminhkhang.jarvisai.data.repository.AuthRepository
 import java.io.IOException
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val api: AuthClientApi
 ) : AuthRepository {
     override suspend fun signIn(request: SignInRequest): Result<SignInResponse> {

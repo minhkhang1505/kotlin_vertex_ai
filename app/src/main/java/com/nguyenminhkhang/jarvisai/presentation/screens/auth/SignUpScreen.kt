@@ -106,7 +106,7 @@ fun SignUpScreen(navController: NavController, viewModel : AuthViewModel = hiltV
                     modifier = Modifier,
                     buttonText = "Create Account",
                     trailingIcon = null,
-                    onClick = { }
+                    onClick = { viewModel.onSignUpEvent(SignUpEvent.OnSignUpClick) }
                 )
                 Spacer(Modifier.height(spaceBetweenElements + 10.dp))
                 DividerOr(modifier = Modifier.padding(horizontal = 60.dp))
@@ -115,13 +115,15 @@ fun SignUpScreen(navController: NavController, viewModel : AuthViewModel = hiltV
                     modifier = Modifier,
                     buttonText = "Sign in with Google",
                     leadingIcon = painterResource(R.drawable.ic_google),
-                    onClick = {  }
+                    onClick = {
+                        //TODO: Google Sign Up will be implemented later
+                    }
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 NoName(
                     description = "You already have an account? ",
                     fontSize = 12.sp,
-                    onClick = {navController.navigate("login")},
+                    onClick = { navController.navigate("login") },
                     buttonName = "Sign In"
                 )
             }
