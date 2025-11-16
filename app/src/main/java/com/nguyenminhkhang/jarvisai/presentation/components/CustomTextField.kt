@@ -45,6 +45,7 @@ fun CustomTextField(
         BasicTextField(
             value = value,
             onValueChange = { onValueChange(it) },
+            singleLine = true,
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(12.dp))
                 .background(MaterialTheme.colorScheme.outline.copy(0.1f)),

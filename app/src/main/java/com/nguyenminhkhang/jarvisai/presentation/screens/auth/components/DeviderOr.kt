@@ -2,6 +2,7 @@ package com.nguyenminhkhang.jarvisai.presentation.screens.auth.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +19,7 @@ fun DividerOr(modifier: Modifier = Modifier) {
         Divider(modifier = Modifier.weight(1f))
         Text(
             text = "Or",
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(horizontal = 8.dp),
             fontSize = 16.sp
         )

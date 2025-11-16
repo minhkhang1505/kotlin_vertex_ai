@@ -1,6 +1,5 @@
 package com.nguyenminhkhang.jarvisai.presentation.screens.auth
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,28 +22,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nguyenminhkhang.jarvisai.R
 import com.nguyenminhkhang.jarvisai.presentation.components.CustomButton
 import com.nguyenminhkhang.jarvisai.presentation.components.CustomTextField
 import com.nguyenminhkhang.jarvisai.presentation.components.SignInWithGoogle
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.DividerOr
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.components.NoName
-import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.nguyenminhkhang.jarvisai.presentation.viewmodel.LoginEvent
+import com.nguyenminhkhang.jarvisai.presentation.viewmodel.AuthViewModel
+import com.nguyenminhkhang.jarvisai.presentation.viewmodel.SignUpEvent
 
-data class LoginState(
+data class SignUpState(
     var username: String = "",
     var password: String = "",
+    var confirmPassword: String = "",
     var isLoading: Boolean = false,
     var errorMessage: String? = null
 )
 
-val spaceBetweenElements = 12.dp
-
 @Composable
-fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
-    val uiState = viewModel.uiState.collectAsState()
+fun SignUpScreen(viewModel : AuthViewModel = hiltViewModel()) {
+    val uiState = viewModel.signUpUiState.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,8 +60,8 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.align(Alignment.CenterHorizontally).size(60.dp)
             )
-            Text("Wellcome", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("Sign in to continue to your AI workspace", fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f))
+            Text("Sign Up", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Join thousand of AI enthusiasts today", fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f))
         }
         Spacer(Modifier.height(20.dp))
         Surface (
@@ -75,14 +74,14 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                     .background(MaterialTheme.colorScheme.onPrimary)
                     .padding(16.dp),
             ) {
-                Text("Enter your email and password to sign in now!", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Enter your info to create new account", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
                     modifier = Modifier,
                     value = uiState.value.username,
                     textFieldTitle = "Username",
                     trailingIcon = null,
-                    onValueChange = {viewModel.onEvent(LoginEvent.OnUsernameChange(it))},
+                    onValueChange = {viewModel.onSignUpEvent(SignUpEvent.OnUsernameChange(it))},
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 CustomTextField(
@@ -90,13 +89,22 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                     value = uiState.value.password,
                     textFieldTitle = "Password",
                     trailingIcon = painterResource(R.drawable.ic_eye_on),
-                    onValueChange = {viewModel.onEvent(LoginEvent.OnPasswordChange(it))},
+                    onValueChange = {viewModel.onSignUpEvent(SignUpEvent.OnPasswordChange(it))},
+                    isPassword = true
+                )
+                Spacer(Modifier.height(spaceBetweenElements))
+                CustomTextField(
+                    modifier = Modifier,
+                    value = uiState.value.confirmPassword,
+                    textFieldTitle = "Confirm Password",
+                    trailingIcon = painterResource(R.drawable.ic_eye_on),
+                    onValueChange = {viewModel.onSignUpEvent(SignUpEvent.OnConfirmPasswordChange(it))},
                     isPassword = true
                 )
                 Spacer(Modifier.height(spaceBetweenElements + 12.dp))
                 CustomButton(
                     modifier = Modifier,
-                    buttonText = "Sign In",
+                    buttonText = "Create Account",
                     trailingIcon = null,
                     onClick = { }
                 )
@@ -111,10 +119,10 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                 )
                 Spacer(Modifier.height(spaceBetweenElements))
                 NoName(
-                    description = "You don't have an account? ",
+                    description = "You already have an account? ",
                     fontSize = 12.sp,
                     onClick = {},
-                    buttonName = "Sign Up"
+                    buttonName = "Sign In"
                 )
             }
         }

@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.LoginScreen
 import com.nguyenminhkhang.jarvisai.presentation.screens.auth.LoginState
+import com.nguyenminhkhang.jarvisai.presentation.screens.auth.SignUpScreen
 import com.nguyenminhkhang.jarvisai.ui.theme.JarvisAITheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 darkTheme = isSystemInDarkTheme(),
                 dynamicColor = false
             ) {
-                LoginScreen()
+                SignUpScreen()
             }
         }
     }
